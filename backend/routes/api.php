@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\BoardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,4 +36,7 @@ Route::group([
 	Route::delete('tasks/{id}', [TaskController::class, 'remove']);
 	Route::get('tasks/', [TaskController::class, 'index']);
 	Route::put('tasks/{id}', [TaskController::class, 'update']);
+
+	Route::post('boards', [BoardController::class, 'store']);
+	Route::post('boards/{id}/authorize', [BoardController::class, 'authorizeUser']);
 });

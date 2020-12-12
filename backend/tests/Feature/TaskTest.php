@@ -16,10 +16,11 @@ class TaskTest extends TestCase
     public function test_user_can_create_a_task(){
         $user = User::factory()->create();
         $token = JWTAuth::fromUser($user);
+        $dueDate = now();
         $data = [
             'title' => 'title',
             'description' => 'description',
-            'due_date' => '20.12.2020',
+            'due_date' => $dueDate,
             'completed' => false,
         ];
         $response = $this->json('post', '/api/tasks?token=' . $token, $data);
@@ -64,6 +65,7 @@ class TaskTest extends TestCase
     }
 
     public function test_user_can_update_task(){
+        $this->withoutExceptionHandling();
         $user = User::factory()->create();
         $task = Task::factory()->create([
             'user_id' => $user->id
@@ -72,16 +74,14 @@ class TaskTest extends TestCase
         $response = $this->json('put', '/api/tasks/'. $task->id . '?token=' . $token, [
             'title' => 'new title',
             'description' => 'new description',
-            'due_date' => '12.12.2021',
+            'due_date' => now(),
             'completed' => false,
         ]);
         $response->assertOk();
-        $this->assertDatabaseHas('tasks', [
+        $response->assertJson([
             'id' => $task->id,
             'title' => 'new title',
             'description' => 'new description',
-            'due_date' => '12.12.2021',
-            'completed' => 0,
         ]);
     }
 }

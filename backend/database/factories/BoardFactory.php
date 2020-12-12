@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\Task;
+use App\Models\Board;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-class TaskFactory extends Factory
+class BoardFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Task::class;
+    protected $model = Board::class;
 
     /**
      * Define the model's default state.
@@ -24,9 +24,7 @@ class TaskFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence($nbWords = 3, $variableNbWords = true),
-            'description' => $this->faker->sentence($nbWords = 3, $variableNbWords = true),
-            'due_date' => now(),
-            'completed' => $this->faker->boolean,
+            'description' => $this->faker->sentence($nbWords = 3, $variableNbWords = true)
         ];
     }
 }
